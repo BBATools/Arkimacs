@@ -25,9 +25,14 @@
   :mode "\\.py\\'"
   :custom (python-indent-offset 2))
 
-(use-package gradle-mode
+(use-package groovy-mode
   :ensure t
-  :mode "\\.gradle\\'")
+  :mode "\\.groovy\\'\\|\\.gradle\\'")
+
+(use-package kotlin-mode
+  :ensure t
+  :mode "\\.kt\\'")
+
 
 ;; TODO: Legg inn at escape avslutter (exit?) completion
 (use-package company :ensure t
@@ -37,18 +42,18 @@
   (("C-SPC" . company-complete-common)
 
    )
-;; :map company-mode-map
-;; ("<tab>" . company-complete-common))
-;; (:map company-active-map
-;; ("<tab>" . company-complete-common-or-cycle))
-;; (:map company-template-nav-map
-;; ("<tab>" . company-complete-common)
-;; ("<C-return>" . company-template-forward-field))
+  ;; :map company-mode-map
+  ;; ("<tab>" . company-complete-common))
+  ;; (:map company-active-map
+  ;; ("<tab>" . company-complete-common-or-cycle))
+  ;; (:map company-template-nav-map
+  ;; ("<tab>" . company-complete-common)
+  ;; ("<C-return>" . company-template-forward-field))
 
-:init
-(global-company-mode)
-(setq-default company-require-match nil
-              company-idle-delay nil))
+  :init
+  (global-company-mode)
+  (setq-default company-require-match nil
+                company-idle-delay nil))
 
 (provide 'ark-code)
 ;;; ark-code.el ends here

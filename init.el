@@ -1,7 +1,6 @@
 ;;; init.el --- description -*- lexical-binding: t; -*-
 
 ;; TODO: Blir ikke recentf oppdatert lenger?
-;; TODO: https://melpa.org/#/vterm
 ;; TODO: https://github.com/shosti/wacspace.el/blob/54d19aab6fd2bc5945b7ffc58104e695064927e2/README.md
 
 ;;; Package:
