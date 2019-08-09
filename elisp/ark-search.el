@@ -15,7 +15,7 @@
 
 (use-package phi-search
   :ensure t
-  :after mood-line
+  ;; :after mood-line
   :bind
   ("C-f" . phi-search)
   ("C-S-f" . phi-search-backward)

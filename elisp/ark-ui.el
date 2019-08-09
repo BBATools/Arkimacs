@@ -1,4 +1,5 @@
 ;;; ark-ui.el --- description -*- lexical-binding: t; -*-
+
 ;;; Commentary:
 
 ;;; Code:
@@ -38,35 +39,51 @@
 (use-package doom-themes
   :ensure t)
 
-(use-package mood-line
+(use-package smart-mode-line
   :ensure t
-  :init (mood-line-mode)
-  :config
-  (setq-default mode-line-format
-                '((:eval
-                   (mood-line-format
-                    ;; Left
-                    (format-mode-line
-                     '((:eval (mood-line-segment-modified))
-                       (:eval (mood-line-segment-buffer-name))
-                       (:eval (mood-line-segment-position))
-                       (:eval  (if (boundp 'phi-search--selection)
-                                   (let ((total (length phi-search--overlays))
-                                         (selection phi-search--selection))
-                                     (when selection
-                                       (format "(Match: %d/%d )" (1+ selection) total)))
-                                 nil))
-                       ;; (:eval (mood-line-segment-multiple-cursors))
-                       ))
-
-                    ;; Right
-                    (format-mode-line
-                     '((:eval (mood-line-segment-vc))
-                       (:eval (mood-line-segment-major-mode))
-                       (:eval (mood-line-segment-global-mode-string))
-                       (:eval (mood-line-segment-flycheck))
-                       " "))))))
+  ;; :disabled t
+  :init (sml/setup)
+  :config (setq sml/theme 'respectful)
   )
+
+(use-package mini-modeline
+  :straight (:host github :repo "kiennq/emacs-mini-modeline" :files ("*.el"))
+  ;; :disabled t
+  ;; :after mood-line
+  :after smart-mode-line
+  :config
+  (mini-modeline-mode t))
+
+;; (use-package mood-line
+;;   :ensure t
+;;   :disabled t
+;;   :init (mood-line-mode)
+;;   :config
+;;   (setq-default mode-line-format
+;;                 (mood-line-format
+;;                  '((:eval
+;;                     ;; Left
+;;                     (format-mode-line
+;;                      '((:eval (mood-line-segment-modified))
+;;                        (:eval (mood-line-segment-buffer-name))
+;;                        (:eval (mood-line-segment-position))
+;;                        (:eval  (if (boundp 'phi-search--selection)
+;;                                    (let ((total (length phi-search--overlays))
+;;                                          (selection phi-search--selection))
+;;                                      (when selection
+;;                                        (format "(Match: %d/%d )" (1+ selection) total)))
+;;                                  nil))
+;;                        ;; (:eval (mood-line-segment-multiple-cursors))
+;;                        ))
+
+;;                     ;; Right
+;;                     (format-mode-line
+;;                      '((:eval (mood-line-segment-vc))
+;;                        (:eval (mood-line-segment-major-mode))
+;;                        (:eval (mood-line-segment-global-mode-string))
+;;                        (:eval (mood-line-segment-flycheck))
+;;                        " "))))))
+;;   )
 
 (use-package solaire-mode
   :ensure t

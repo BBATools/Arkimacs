@@ -1,7 +1,8 @@
 ;;; init.el --- description -*- lexical-binding: t; -*-
 
-;; TODO: Blir ikke recentf oppdatert lenger?
-;; TODO: https://github.com/shosti/wacspace.el/blob/54d19aab6fd2bc5945b7ffc58104e695064927e2/README.md
+;;; Commentary:
+
+;;; Code:
 
 ;;; Package:
 (require 'package)
@@ -11,7 +12,8 @@
         ("org" . "http://orgmode.org/elpa/")
         ("melpa-stable" . "http://stable.melpa.org/packages/")
         ("melpa" . "http://melpa.org/packages/")
-        ("marmalade" . "https://marmalade-repo.org/packages/")))
+        ;; ("marmalade" . "https://marmalade-repo.org/packages/")
+        ))
 
 (package-initialize)
 
@@ -20,6 +22,7 @@
   (package-install 'use-package))
 
 (eval-when-compile
+  ;; (not free-vars)
   (require 'use-package))
 
 (defvar bootstrap-version)
@@ -412,22 +415,29 @@
 
 (use-package posframe
   :ensure t
+  :disabled t
   :config (setq posframe-mouse-banish nil)
   )
 
+
 (use-package ivy-posframe
   :ensure t
+  :disabled t
   :after ivy
+  ;; TODO: Top center virker ikke etter oppdatering
   :custom   (ivy-display-function #'ivy-posframe-display-at-frame-top-center)
   :init
   (defun ivy-posframe-display-at-frame-top-center (str)
     (ivy-posframe--display str #'posframe-poshandler-frame-top-center))
-  (defun posframe-poshandler-frame-top-center (info)
-    (cons (/ (- (plist-get info :parent-frame-width)
-                (plist-get info :posframe-width))
-             2)
-          (round (* 0.02 (x-display-pixel-height)))))
-  (ivy-posframe-enable)
+
+  ;; (defun ivy-posframe-display-at-frame-top-center (str)
+  ;;   (ivy-posframe--display str #'posframe-poshandler-frame-top-center))
+  ;; (defun posframe-poshandler-frame-top-center (info)
+  ;;   (cons (/ (- (plist-get info :parent-frame-width)
+  ;;               (plist-get info :posframe-width))
+  ;;            2)
+  ;;         (round (* 0.02 (x-display-pixel-height)))))
+  ;; (ivy-posframe-enable)
   :config
   (dolist (cmd '(counsel-yank-pop
                  ;; ivy-imenu-anywhere

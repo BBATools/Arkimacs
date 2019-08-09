@@ -2,10 +2,12 @@
 
 (use-package expand-line
   :ensure t
-  :bind ("M-l" . turn-on-expand-line-mode))
+  :bind (("M-l" . turn-on-expand-line-mode)))
 
 (use-package saveplace
-  :init (setq save-place-file (concat cache-dir "/places"))
+  :init
+  (defvar cache-dir)
+  (setq save-place-file (concat cache-dir "/places"))
   :config
   (save-place-mode 1)
   (setq save-place-forget-unreadable-files nil))

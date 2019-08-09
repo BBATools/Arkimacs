@@ -5,7 +5,8 @@
 (use-package flycheck
   :ensure t
   :init
-  (global-flycheck-mode t))
+  (global-flycheck-mode t)
+  :config (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
 (use-package jedi
   :ensure t

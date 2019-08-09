@@ -14,95 +14,14 @@
 ;;   :group 'frame-tabs)
 
 
-(use-package eyebrowse
-  :ensure t
-  :diminish eyebrowse-mode
-  :custom (eyebrowse-new-workspace t)
-  :config (eyebrowse-mode))
-
-
-(add-to-list 'default-frame-alist '(close-inner-windows . nil))
-
-(defun my/close-frame-function(frame)
-  (if (frame-parameter nil 'close-inner-windows)
-      (dolist (window (window-list))
-        (let ((buffer (window-buffer window)))
-          (when (< (length (get-buffer-window-list buffer nil t)) 2)
-            (kill-buffer buffer))))))
-
-(add-hook 'delete-frame-functions 'my/close-frame-function)
-
-(defun my/set-eyebrowse-frame-title()
-  (interactive)
-  (let*
-      ((window-configs (eyebrowse--get 'window-configs))
-       (current-config (assq (eyebrowse--get 'current-slot) window-configs))
-       (window-tag (car (last current-config)))
-       title
-       (index (-elem-index (assq (eyebrowse--get 'current-slot) window-configs) window-configs))
-       (curr-count (car (nth index window-configs)))
-       (first-count (caar window-configs))
-       (last-count (caar (last window-configs))))
-    (if (= (length window-tag) 0)
-        (setq title (concat (number-to-string (car current-config)) "@Arkimacs"))
-      (setq title (concat (car (last current-config)) "@Arkimacs")))
-    (if (equal curr-count first-count)
-        (set-frame-name (concat title " >"))
-      (if (equal curr-count last-count)
-          (set-frame-name (concat "< " title))
-        (set-frame-name (concat "< " title " >")))))
-  (force-mode-line-update))
-
-(add-hook 'eyebrowse-post-window-switch-hook 'my/set-eyebrowse-frame-title)
-
-
-(defun my/move-ws-left()
-  (interactive)
-  (let*
-      ((window-configs (eyebrowse--get 'window-configs))
-       (index (-elem-index (assq (eyebrowse--get 'current-slot) window-configs) window-configs))
-       (curr-count (car (nth index window-configs)))
-       (first-count (caar window-configs)))
-    (if (equal curr-count first-count)
-        (eyebrowse-switch-to-window-config (1- first-count))
-      (eyebrowse-prev-window-config nil))))
-
-(defun rename-ws(tag)
-  (interactive "MWorkspace Name: ")
-  (eyebrowse-rename-window-config (eyebrowse--get 'current-slot) tag)
-  (my/set-eyebrowse-frame-title))
-
-(defun my/move-ws-right ()
-  (interactive)
-  (let*
-      ((window-configs (eyebrowse--get 'window-configs))
-       (index (-elem-index (assq (eyebrowse--get 'current-slot) window-configs) window-configs))
-       (curr-count (car (nth index window-configs)))
-       (last-count (caar (last window-configs))))
-    (if (equal curr-count last-count)
-        (eyebrowse-switch-to-window-config (1+ last-count))
-      (eyebrowse-next-window-config nil))))
-
-(define-key eyebrowse-mode-map (kbd "M-<left>") 'my/move-ws-left)
-(define-key eyebrowse-mode-map (kbd "M-<right>") 'my/move-ws-right)
-
-
-
-
-
-
-
-
-
-
-;; TODO: Test igjen senere: https://github.com/matthias-margush/spacebar
+;;TODO: Test mer senere
+;; Test også maple-tabbar-side-mode (som frame-tabs) senere (for mye bugs nå): https://github.com/honmaple/emacs-maple-tabbar
 (use-package spacebar
-  :load-path "elisp"
+  :ensure t
   :disabled t
-  :after eyebrowse
+  ;; :bind-keymap ("C-c w" . spacebar-command-map)
   :config
-  (spacebar-mode)
-  :init)
+  (spacebar-mode))
 
 
 ;; TODO: Test å endre til å bruke buffer-list som definert i nerd-tab heller: https://github.com/casouri/nerdtab/blob/master/nerdtab.el
