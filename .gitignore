@@ -2,6 +2,7 @@
 cache/
 eshell/
 straight/
+transient/
 elpa/
 .python-environments/default/
 .mc-lists.el

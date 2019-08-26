@@ -1,8 +1,5 @@
 ;;; init.el --- description -*- lexical-binding: t; -*-
 
-;;; Commentary:
-
-;;; Code:
 
 ;;; Package:
 (require 'package)
