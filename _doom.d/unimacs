@@ -1,0 +1,11 @@
+#!/bin/bash
+#UNIMACS=$(cd $(dirname "$0"); pwd) # Find own path
+# read xresources-file to set initial framesize etc
+
+export LC_COLLATE=C             # Fixes sorting in dired
+
+if test -n "$1"; then
+    emacsclient --no-wait "$@" 2> /dev/null || emacs --no-site-file "$@" &
+else
+    emacsclient --eval "(raise-frame (selected-frame))" 2> /dev/null || emacs --no-site-file &
+fi
